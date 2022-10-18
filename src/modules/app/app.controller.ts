@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get } from "@nestjs/common";
+import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
@@ -10,12 +10,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/login')
+  @Get("/login")
   login(): any {
     return {
       code: 200,
-      message: 'token过期',
-      data: 'token过期',
+      message: "token过期",
+      data: "token过期",
     };
   }
 }
