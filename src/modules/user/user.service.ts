@@ -5,15 +5,26 @@ import { User } from "../../entities/user.entity";
 
 @Injectable()
 export class UserService {
-  // 在构造方法中注入实体
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private usersRepository: Repository<User>,
   ) {}
 
-  // 在这里新增一个getAll方法，测试配置是否正确
-  async getAllUserTest(): Promise<User[]> {
-    // 其实这里也可以使用BaseEntity里提供的Read方法，不过建议还是自己写SQL比较好
-    return await this.userRepository.query("select * from user");
+  findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  findOne(id: number): Promise<User> {
+    return this.usersRepository.findOne({ where: { id } });
+  }
+
+  async addUser(): Promise<User> {
+    const user = new User();
+
+    user.username = "admin";
+    user.password = "admin123";
+    user.phone = "133344556677";
+
+    return await this.usersRepository.save(user);
   }
 }

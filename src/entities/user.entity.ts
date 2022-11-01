@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from "typeorm";
 
 @Entity()
@@ -11,21 +12,24 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true, nullable: true })
+  @PrimaryColumn({ length: 30 })
   username: string;
 
-  @Column({ nullable: true })
+  @Column({ length: 30 })
   password: string;
 
-  @Column()
+  @Column({ nullable: true, length: 20 })
   phone: string;
 
-  @Column()
+  @Column({ nullable: true, length: 30 })
   email: string;
 
+  @Column({ default: true })
+  isActive: boolean;
+
   @CreateDateColumn()
-  createTime: Date;
+  create_time: Date;
 
   @UpdateDateColumn()
-  updateTime: Date;
+  update_time: Date;
 }
