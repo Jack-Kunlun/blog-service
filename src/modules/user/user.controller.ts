@@ -1,4 +1,5 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
+import { UserDto } from "./dto/user.dto";
 import { UserService } from "./user.service";
 
 @Controller("user")
@@ -14,7 +15,10 @@ export class UserController {
   }
 
   @Post("/addUser")
-  async addUser() {
+  @HttpCode(200)
+  async addUser(@Body() userDto: UserDto) {
+    console.log("userDto:", userDto);
+
     try {
       const res = await this.userService.addUser();
 

@@ -25,7 +25,7 @@ export class User {
   email: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  active: boolean;
 
   @CreateDateColumn()
   create_time: Date;
