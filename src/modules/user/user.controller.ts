@@ -20,15 +20,12 @@ export class UserController {
     console.log("userDto:", userDto);
 
     try {
+      throw "直接错";
       const res = await this.userService.addUser();
-
-      console.log(res);
 
       return res;
     } catch (err) {
-      console.error("error", err);
-
-      return "报错了！";
+      return { code: 400, message: err };
     }
   }
 }

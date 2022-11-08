@@ -1,5 +1,3 @@
-// src/pipes/validate.pipe.ts
-
 import {
   ArgumentMetadata,
   BadRequestException,
