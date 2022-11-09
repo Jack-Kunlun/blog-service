@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
@@ -6,8 +7,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity()
-export class User {
+@Entity("user")
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,6 +16,7 @@ export class User {
   username: string;
 
   @Column({ length: 30 })
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @Column({ nullable: true, length: 20 })
@@ -26,9 +28,9 @@ export class User {
   @Column({ default: true })
   active: boolean;
 
-  @CreateDateColumn()
-  create_time: Date;
+  @CreateDateColumn({ name: "create_time" })
+  createTime: Date;
 
-  @UpdateDateColumn()
-  update_time: Date;
+  @UpdateDateColumn({ name: "update_time" })
+  updateTime: Date;
 }

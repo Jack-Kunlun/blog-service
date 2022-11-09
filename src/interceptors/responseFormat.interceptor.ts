@@ -13,6 +13,11 @@ interface Response<T = any> {
   data: T;
 }
 
+/**
+ * 全局响应数据拦截器
+ * 正确时只需要返回data
+ * 有错误时需要返回code和message
+ */
 @Injectable()
 export class ResponseFormatInterceptor implements NestInterceptor {
   intercept(
@@ -20,11 +25,10 @@ export class ResponseFormatInterceptor implements NestInterceptor {
     next: CallHandler<any>,
   ): Observable<Response> | Promise<Observable<Response>> {
     return next.handle().pipe(
-      // 将原有的 `data` 转化为统一的格式后返回
       map((data) => {
         const code = data?.code || 200;
 
-        const message = data?.message || "success";
+        const message = data?.message || "Success";
 
         if (code !== 200) {
           return {

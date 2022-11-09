@@ -18,9 +18,11 @@ export class ResponseErrorInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       catchError(async (err) => {
+        const message = err?.response?.message || err.message;
+
         return {
           code: err.status || 400,
-          message: err.message,
+          message,
           data: null,
         };
       }),

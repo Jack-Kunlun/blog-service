@@ -40,8 +40,6 @@ export class UserController {
         email,
       );
 
-      delete res.password;
-
       return res;
     } catch (err) {
       return { code: 400, message: err };
