@@ -1,27 +1,46 @@
-import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
-import { UserDto } from "./dto/user.dto";
+import { Body, Controller, Get, Post, HttpCode } from "@nestjs/common";
+import { LoginDto, UserDto } from "./dto/user.dto";
 import { UserService } from "./user.service";
 
 @Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get("/getUser")
+  @Post("login")
+  @HttpCode(200)
+  async login(@Body() { username, password }: LoginDto) {
+    try {
+      const user = await this.userService.login(username, password);
+
+      if (!user) {
+        throw "用户名或密码错误！";
+      }
+
+      return user;
+    } catch (err) {
+      return { code: 400, message: err };
+    }
+  }
+
+  @Get("getUser")
   async getUser() {
     const data = await this.userService.findAll();
-    console.log("data", data);
 
     return data;
   }
 
-  @Post("/addUser")
+  @Post("addUser")
   @HttpCode(200)
-  async addUser(@Body() userDto: UserDto) {
-    console.log("userDto:", userDto);
-
+  async addUser(@Body() { username, password, phone, email }: UserDto) {
     try {
-      throw "直接错";
-      const res = await this.userService.addUser();
+      const res = await this.userService.addUser(
+        username,
+        password,
+        phone,
+        email,
+      );
+
+      delete res.password;
 
       return res;
     } catch (err) {

@@ -10,6 +10,10 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
 
+  login(username: string, password: string): Promise<User> {
+    return this.usersRepository.findOne({ where: { username, password } });
+  }
+
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
@@ -18,12 +22,18 @@ export class UserService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
-  async addUser(): Promise<User> {
+  async addUser(
+    username: string,
+    password: string,
+    phone?: string,
+    email?: string,
+  ): Promise<User> {
     const user = new User();
 
-    user.username = "admin";
-    user.password = "admin123";
-    user.phone = "133344556677";
+    user.username = username;
+    user.password = password;
+    user.phone = phone;
+    user.email = email;
 
     return await this.usersRepository.save(user);
   }

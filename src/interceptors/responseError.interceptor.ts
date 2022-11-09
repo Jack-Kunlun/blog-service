@@ -7,6 +7,9 @@ import {
 import { Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 
+/**
+ * 捕获未处理的错误，并按格式统一返回
+ */
 @Injectable()
 export class ResponseErrorInterceptor implements NestInterceptor {
   intercept(
@@ -15,10 +18,8 @@ export class ResponseErrorInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       catchError(async (err) => {
-        console.log(err, err.response.message);
-
         return {
-          code: err.status || -1,
+          code: err.status || 400,
           message: err.message,
           data: null,
         };

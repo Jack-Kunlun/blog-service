@@ -11,8 +11,8 @@ async function bootstrap() {
   const port = configService.get("port");
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new ResponseFormatInterceptor());
   app.useGlobalInterceptors(new ResponseErrorInterceptor());
+  app.useGlobalInterceptors(new ResponseFormatInterceptor());
 
   await app.listen(port);
 }

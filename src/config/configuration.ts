@@ -17,7 +17,7 @@ export default () => {
       database: process.env.DB_DATABASE,
       entities: [`${__dirname}/../entities/*.entity.{js,ts}`],
       // 警告：设置 synchronize: true 不能被用于生产环境，否则您可能会丢失生产环境数据
-      synchronize: true,
+      synchronize: false,
       logging: ["error"],
       timezone: "+08:00",
       cache: {
