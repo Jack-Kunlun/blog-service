@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, HttpCode } from "@nestjs/common";
+import { encryptPassword, makeSalt } from "src/utils/cryptogram";
 import { LoginDto, UserDto } from "./dto/user.dto";
 import { UserService } from "./user.service";
 
@@ -10,10 +11,16 @@ export class UserController {
   @HttpCode(200)
   async login(@Body() { username, password }: LoginDto) {
     try {
-      const user = await this.userService.login(username, password);
+      const user = await this.userService.login(username);
 
       if (!user) {
-        throw "用户名或密码错误！";
+        throw "该用户不存在！";
+      }
+
+      const encryptedPassword = encryptPassword(password, user.passwordSalt);
+
+      if (encryptedPassword !== user.password) {
+        throw "密码错误！";
       }
 
       return user;
@@ -29,13 +36,18 @@ export class UserController {
     return data;
   }
 
-  @Post("addUser")
+  @Post("register")
   @HttpCode(200)
   async addUser(@Body() { username, password, phone, email }: UserDto) {
     try {
+      const salt = makeSalt();
+
+      const encryptionPassword = encryptPassword(password, salt);
+
       const res = await this.userService.addUser(
         username,
-        password,
+        encryptionPassword,
+        salt,
         phone,
         email,
       );

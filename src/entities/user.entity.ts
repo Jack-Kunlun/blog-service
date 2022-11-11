@@ -19,6 +19,10 @@ export class UserEntity {
   @Exclude({ toPlainOnly: true })
   password: string;
 
+  @Column({ length: 30, name: "password_salt" })
+  @Exclude({ toPlainOnly: true })
+  passwordSalt: string;
+
   @Column({ nullable: true, length: 20 })
   phone: string;
 
