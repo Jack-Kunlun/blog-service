@@ -1,3 +1,22 @@
+## 注意
+1.项目取下来后，还缺少.env配置文件，需要手动创建一份，并写入相关配置，示例如下：
+`
+// 项目运行端口
+PORT=3000
+
+// 数据库相关配置
+DB_TYPE=postgres  // 数据库类型
+DB_PORT=5432  // 端口
+DB_DATABASE=blog  // 数据库名称
+DB_USERNAME=test  // 用户名
+DB_PASSWORD=test123  // 密码
+
+DB_HOST_DEV="1.1.1.1"  // 数据库开发环境host地址
+
+DB_HOST_PRO="2.2.2.2"  // 数据库生产环境host地址
+`
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
