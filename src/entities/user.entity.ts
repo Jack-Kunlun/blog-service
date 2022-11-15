@@ -1,22 +1,27 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryColumn,
 } from "typeorm";
 
-@Entity()
-export class User {
+@Entity("user")
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @PrimaryColumn({ length: 30 })
+  @Column({ length: 30, unique: true })
   username: string;
 
   @Column({ length: 30 })
+  @Exclude({ toPlainOnly: true })
   password: string;
+
+  @Column({ length: 30, name: "password_salt" })
+  @Exclude({ toPlainOnly: true })
+  passwordSalt: string;
 
   @Column({ nullable: true, length: 20 })
   phone: string;
@@ -25,11 +30,11 @@ export class User {
   email: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  active: boolean;
 
-  @CreateDateColumn()
-  create_time: Date;
+  @CreateDateColumn({ name: "create_time" })
+  createTime: Date;
 
-  @UpdateDateColumn()
-  update_time: Date;
+  @UpdateDateColumn({ name: "update_time" })
+  updateTime: Date;
 }
